@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asesmen Sumatif Agama Kristen Kelas 5 SD</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        .font-heading {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+        .custom-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 3px solid #60a5fa;
+            box-shadow: 0 12px 28px -6px rgba(59, 130, 246, 0.22);
+        }
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .option-btn:hover {
+            transform: translateY(-2px);
+        }
+        .selected-option {
+            background-color: #dbeafe !important;
+            border-color: #2563eb !important;
+            color: #1e3a8a !important;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+        .match-item {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .match-selected {
+            background-color: #fef08a !important;
+            border-color: #eab308 !important;
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(234, 179, 8, 0.2);
+        }
+        .match-matched {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
+            cursor: default;
+        }
+        .badge-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .9; transform: scale(1.03); }
+        }
+    </style>
+</head>
+<body class="p-3 md:p-6 text-slate-800">
+
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- HEADER APP -->
+        <header class="text-center mb-6">
+            <div class="inline-flex items-center bg-white px-5 py-2.5 rounded-full border-4 border-blue-400 shadow-md mb-3 space-x-2">
+                <span class="text-blue-600 text-xl"><i class="fa-solid fa-cross"></i></span>
+                <span class="text-blue-800 font-extrabold text-xs md:text-sm tracking-wider uppercase">Pendidikan Agama Kristen & Budi Pekerti</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-black text-blue-950 font-heading tracking-wide">
+                ASESMEN SUMATIF AKHIR MATERI 4
+            </h1>
+            <p class="text-blue-700 font-bold text-base md:text-lg mt-1">
+                "Keselamatan Allah Dalam Yesus Kristus" • Kelas 5 SD
+            </p>
+        </header>
+
+        <div id="start-screen" class="custom-card rounded-3xl p-6 md:p-8 mb-8">
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3 text-blue-600 text-3xl shadow-inner border-2 border-blue-200">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h2 class="text-2xl font-black font-heading text-slate-800">Isi Data Diri Sebelum Memulai</h2>
+                <p class="text-slate-600 text-xs md:text-sm mt-1">Pastikan nama dan nomor absen sudah benar agar nilaimu tercatat dengan akurat.</p>
+            </div>
+
+            <!-- REGISTRATION FORM -->
+            <form id="identity-form" onsubmit="startAssessment(event)" class="space-y-4 max-w-md mx-auto">
+                <div>
+                    <label class="block text-slate-700 font-extrabold mb-1.5 text-xs md:text-sm">
+                        <i class="fa-solid fa-user text-blue-500 mr-1.5"></i>Nama Lengkap Siswa
+                    </label>
+                    <input type="text" id="student-name" required placeholder="Ketik nama lengkapmu di sini..." class="w-full px-4 py-3 rounded-2xl border-2 border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none font-bold text-slate-800 shadow-sm transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-700 font-extrabold mb-1.5 text-xs md:text-sm">
+                            <i class="fa-solid fa-school text-blue-500 mr-1.5"></i>Kelas
+                        </label>
+                        <select id="student-class" required class="w-full px-4 py-3 rounded-2xl border-2 border-slate-300 focus:border-blue-500 focus:outline-none font-bold text-slate-800 shadow-sm">
+                            <option value="5 A">5 A</option>
+                            <option value="5 B">5 B</option>
+                            <option value="5 C">5 C</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 font-extrabold mb-1.5 text-xs md:text-sm">
+                            <i class="fa-solid fa-list-ol text-blue-500 mr-1.5"></i>No. Absen
+                        </label>
+                        <input type="number" id="student-no" required min="1" max="50" placeholder="Contoh: 12" class="w-full px-4 py-3 rounded-2xl border-2 border-slate-300 focus:border-blue-500 focus:outline-none font-bold text-slate-800 shadow-sm">
+                    </div>
+                </div>
+
+                <!-- ATTEMPT WARNING BOX -->
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-900 text-xs flex items-start space-x-3 mt-4 shadow-sm">
+                    <i class="fa-solid fa-shield-halved text-amber-600 text-2xl shrink-0 mt-0.5"></i>
+                    <div>
+                        <strong class="font-extrabold text-amber-950 block text-sm mb-0.5">Peraturan Penting!</strong>
+                        Sistem hanya mengizinkan kamu mengerjakan tugas ini <span class="underline font-black text-amber-950">SATU KALI SAJA</span>. Berdoalah sebelum mulai dan kerjakan dengan teliti!
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-black text-lg py-4 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 font-heading tracking-wider">
+                    <i class="fa-solid fa-play-circle mr-2"></i> MULAI KERJAKAN TUGAS
+                </button>
+            </form>
+        </div>
+
+        <div id="assessment-container" class="hidden space-y-8">
+            
+            <!-- STICKY STUDENT HEADER BAR -->
+            <div class="bg-blue-600 text-white p-4 rounded-2xl shadow-lg flex flex-wrap justify-between items-center text-xs md:text-sm font-bold sticky top-3 z-40 border-2 border-blue-400 backdrop-blur-md">
+                <div class="flex items-center space-x-3">
+                    <span class="bg-amber-400 text-amber-950 px-3 py-1 rounded-full font-black text-xs uppercase" id="bar-class-no">5 A / No. 12</span>
+                    <span class="text-sm md:text-base font-extrabold tracking-wide" id="bar-student-name">Nama Siswa</span>
+                </div>
+                <div class="bg-blue-800/80 px-3 py-1.5 rounded-xl border border-blue-400 flex items-center space-x-2 text-xs">
+                    <i class="fa-solid fa-clock text-amber-300"></i>
+                    <span>Waktu Berjalan</span>
+                </div>
+            </div>
+
+            <div class="custom-card rounded-3xl p-5 md:p-8">
+                <div class="border-b-4 border-blue-200 pb-4 mb-6">
+                    <span class="bg-blue-600 text-white text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">Bagian I</span>
+                    <h2 class="text-2xl font-black font-heading text-blue-950 mt-1">Pilihan Ganda</h2>
+                    <p class="text-slate-600 text-xs md:text-sm">Pilihlah satu jawaban A, B, C, atau D yang paling benar!</p>
+                </div>
+
+                <div id="section-1-questions" class="space-y-6"></div>
+            </div>
+
+            <div class="custom-card rounded-3xl p-5 md:p-8">
+                <div class="border-b-4 border-indigo-200 pb-4 mb-6">
+                    <span class="bg-indigo-600 text-white text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">Bagian II</span>
+                    <h2 class="text-2xl font-black font-heading text-indigo-950 mt-1">Pilihan Ganda Kompleks</h2>
+                    <p class="text-slate-600 text-xs md:text-sm">Pilihlah jawaban yang tepat! (<span class="font-bold underline text-indigo-700">Bisa memilih lebih dari 1 jawaban</span> dengan mencentang kotak).</p>
+                </div>
+
+                <div id="section-2-questions" class="space-y-6"></div>
+            </div>
+
+            <div class="custom-card rounded-3xl p-5 md:p-8">
+                <div class="border-b-4 border-emerald-200 pb-4 mb-6">
+                    <span class="bg-emerald-600 text-white text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">Bagian III</span>
+                    <h2 class="text-2xl font-black font-heading text-emerald-950 mt-1">Menjodohkan Pernyataan</h2>
+                    <p class="text-slate-600 text-xs md:text-sm">Klik salah satu nomor di sebelah KIRI, lalu klik pasangan huruf yang cocok di sebelah KANAN!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="matching-container">
+                    <div class="space-y-3" id="match-left-list"></div>
+                    <div class="space-y-3" id="match-right-list"></div>
+                </div>
+                <div id="match-reset-btn-container" class="mt-4 text-right">
+                    <button onclick="resetMatching()" type="button" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl transition">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reset Pasangan Menjodohkan
+                    </button>
+                </div>
+            </div>
+
+            <div class="custom-card rounded-3xl p-5 md:p-8">
+                <div class="border-b-4 border-rose-200 pb-4 mb-6">
+                    <span class="bg-rose-600 text-white text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider">Bagian IV</span>
+                    <h2 class="text-2xl font-black font-heading text-rose-950 mt-1">Benar atau Salah</h2>
+                    <p class="text-slate-600 text-xs md:text-sm">Tentukan apakah pernyataan di bawah ini BENAR atau SALAH!</p>
+                </div>
+
+                <div id="section-4-questions" class="space-y-6"></div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <div class="text-center pt-4 pb-12">
+                <button onclick="confirmSubmission()" type="button" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-black text-xl px-10 py-5 rounded-3xl shadow-xl transition transform hover:scale-105 active:scale-95 font-heading tracking-wider">
+                    <i class="fa-solid fa-paper-plane mr-3"></i> KUMPULKAN TUGAS SEKARANG
+                </button>
+            </div>
+        </div>
+
+        <div id="locked-screen" class="hidden custom-card rounded-3xl p-6 md:p-8 text-center my-8">
+            <div class="w-24 h-24 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner border-2 border-amber-300">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="text-3xl font-black font-heading text-slate-800 mb-2">Tugas Sudah Dikerjakan!</h2>
+            <p class="text-slate-600 max-w-lg mx-auto mb-6 text-sm">
+                Kamu telah menyelesaikan asesmen ini. Setiap siswa hanya diperbolehkan mengerjakan <span class="font-bold underline">1 kali</span> agar penilaian jujur dan adil.
+            </p>
+            <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-5 max-w-md mx-auto mb-6 shadow-sm">
+                <p class="text-xs text-slate-500 font-extrabold uppercase">Hasil Terakhir Kamu:</p>
+                <p class="text-3xl font-black text-blue-600 mt-1 font-heading" id="saved-score-display">Skor: - / 100</p>
+                <p class="text-xs text-slate-500 font-semibold mt-1" id="saved-time-display">Dikirim pada: -</p>
+            </div>
+            <button onclick="showCertificateFromStorage()" type="button" class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3.5 px-8 rounded-2xl shadow-md transition font-heading">
+                <i class="fa-solid fa-receipt mr-2"></i> Buka Lembar Hasil & Screenshot
+            </button>
+        </div>
+
+        <div id="result-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-3 overflow-y-auto">
+            <div class="bg-white rounded-3xl max-w-2xl w-full p-5 md:p-8 border-4 border-yellow-400 shadow-2xl relative my-auto">
+                
+                <!-- CERTIFICATE CONTAINER FOR SCREENSHOT -->
+                <div id="certificate-card" class="bg-gradient-to-b from-blue-50 via-white to-amber-50 p-6 rounded-2xl border-2 border-blue-300 relative shadow-inner">
+                    <!-- DECORATIVE STAR BADGE -->
+                    <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-950 rounded-full w-14 h-14 flex items-center justify-center font-black text-2xl shadow-lg transform rotate-12 badge-pulse border-2 border-white">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+
+                    <div class="text-center mb-6">
+                        <span class="text-xs font-black text-blue-600 tracking-widest uppercase bg-blue-100 px-3 py-1 rounded-full">LEMBAR HASIL ASESMEN DIGITAL</span>
+                        <h3 class="text-2xl md:text-3xl font-black text-blue-950 font-heading mt-2">Pendidikan Agama Kristen</h3>
+                        <p class="text-xs text-slate-500 font-bold">Materi 4: Keselamatan Allah dalam Yesus Kristus</p>
+                    </div>
+
+                    <!-- STUDENT DETAILS BOX -->
+                    <div class="bg-white/90 rounded-2xl p-4 border-2 border-blue-100 shadow-sm grid grid-cols-2 gap-3 text-xs md:text-sm mb-6">
+                        <div>
+                            <span class="text-slate-400 font-bold block">Nama Siswa:</span>
+                            <span class="font-extrabold text-slate-900 text-base" id="res-name">-</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 font-bold block">Kelas / No. Absen:</span>
+                            <span class="font-extrabold text-slate-900 text-base" id="res-class-no">-</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 font-bold block">Waktu Selesai:</span>
+                            <span class="font-extrabold text-slate-800" id="res-date">-</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 font-bold block">Status Pengerjaan:</span>
+                            <span class="inline-block bg-emerald-100 text-emerald-800 font-black px-2.5 py-0.5 rounded-lg text-xs">SELESAI (1x Attempt)</span>
+                        </div>
+                    </div>
+
+                    <!-- TOTAL SCORE DISPLAY BOX -->
+                    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-6 text-white text-center shadow-lg mb-6 border-2 border-blue-400">
+                        <p class="text-xs font-black uppercase tracking-wider text-blue-200">NILAI AKHIR KAMU</p>
+                        <div class="text-6xl md:text-7xl font-black font-heading my-1 text-yellow-300 drop-shadow-md" id="res-total-score">0</div>
+                        <p class="text-xs md:text-sm font-extrabold text-blue-100" id="res-grade-predicate">Sangat Baik!</p>
+                    </div>
+
+                    <!-- SCORE BREAKDOWN PER SECTION -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs">
+                        <div class="bg-blue-50/90 p-2.5 rounded-xl border border-blue-200">
+                            <span class="text-slate-500 block font-bold">PG (40%)</span>
+                            <strong class="text-blue-700 font-black text-sm" id="res-s1">0 / 40</strong>
+                        </div>
+                        <div class="bg-indigo-50/90 p-2.5 rounded-xl border border-indigo-200">
+                            <span class="text-slate-500 block font-bold">PG Kompleks (25%)</span>
+                            <strong class="text-indigo-700 font-black text-sm" id="res-s2">0 / 25</strong>
+                        </div>
+                        <div class="bg-emerald-50/90 p-2.5 rounded-xl border border-emerald-200">
+                            <span class="text-slate-500 block font-bold">Menjodohkan (20%)</span>
+                            <strong class="text-emerald-700 font-black text-sm" id="res-s3">0 / 20</strong>
+                        </div>
+                        <div class="bg-rose-50/90 p-2.5 rounded-xl border border-rose-200">
+                            <span class="text-slate-500 block font-bold">Benar/Salah (15%)</span>
+                            <strong class="text-rose-700 font-black text-sm" id="res-s4">0 / 15</strong>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex justify-between items-center text-[11px] text-slate-400 font-bold">
+                        <span>Kode Verifikasi: <span id="res-id" class="font-mono text-slate-600">PAK5-2026-X89</span></span>
+                        <span>Asesmen Agama Kristen Kelas 5</span>
+                    </div>
+                </div>
+
+                <!-- SCREENSHOT ACTION & INSTRUCTIONS -->
+                <div class="mt-5 text-center space-y-3">
+                    <div class="bg-emerald-100 border-2 border-emerald-400 text-emerald-950 p-3.5 rounded-2xl text-xs md:text-sm font-bold flex items-center justify-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-camera text-xl text-emerald-600 shrink-0"></i>
+                        <span>Silahkan **TANGKAP LAYAR (SCREENSHOT)** kartu di atas, lalu kirimkan gambarnya ke Bapak/Ibu Guru!</span>
+                    </div>
+
+                    <button onclick="closeResultModal()" type="button" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-extrabold py-3.5 rounded-2xl transition font-heading tracking-wide">
+                        Tutup Lembar Hasil
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // STORAGE KEY TO ENFORCE ONE-TIME ATTEMPT PER BROWSER
+        const STORAGE_KEY = "asesmen_kristen_kelas5_sd_v1";
+
+        // DATA QUESTIONS FROM PDF DOCUMENT
+        const dataPG = [
+            { id: 1, q: "Ketika melanggar perintah Allah, berarti saya telah berbuat ....", options: ["jahat", "dosa", "curang", "baik"], ans: 1 },
+            { id: 2, q: "Yesus turun ke dunia menjadi ....", options: ["sesama", "keluarga", "malaikat", "manusia"], ans: 3 },
+            { id: 3, q: "Yesus turun ke dunia untuk ....", options: ["menyelamatkan manusia dari dosa", "mengajak manusia pergi ke gereja", "menghukum manusia yang berdosa", "menyatakan kemarahan kepada manusia"], ans: 0 },
+            { id: 4, q: "Anugerah keselamatan yang diberikan Yesus berdasarkan ....", options: ["perhatian Allah yang besar", "perbuatan Allah yang hebat", "kasih Allah kepada manusia", "kepedulian Allah kepada manusia"], ans: 2 },
+            { id: 5, q: "Manusia melakukan perbuatan dosa karena ....", options: ["tidak tahu peraturan pemerintah", "tidak hafal undang-undang dasar", "tidak dapat mengendalikan hawa nafsu", "tidak mau tahu keadaan orang lain"], ans: 2 },
+            { id: 6, q: "Akibat dosa yang dilakukan, hidup manusia dipenuhi dengan ....", options: ["kesukaran dan kesedihan", "kekurangan dan kelimpahan", "ketakutan dan keberanian", "kebingungan dan kekayaan"], ans: 0 },
+            { id: 7, q: "Kitab Kejadian 3 menceritakan ....", options: ["kehidupan manusia pertama di taman Eden", "pelanggaran manusia pertama terhadap perintah Allah", "anak-anak manusia pertama dan pekerjaannya", "perintah pertama Tuhan kepada manusia pertama"], ans: 1 },
+            { id: 8, q: "Adam dan Hawa sudah melanggar perintah Allah, untuk mencari makan mereka harus ....", options: ["meminta-minta", "bergotong royong", "kerja lembur", "bekerja keras"], ans: 3 },
+            { id: 9, q: "Janji Allah untuk menganugerahkan keselamatan, ditulis dalam kitab Kejadian ....", options: ["1:1", "1:26", "2:24", "3:15"], ans: 3 },
+            { id: 10, q: "Mendengar kabar kelahiran Yesus, para gembala ....", options: ["bersembunyi dan ketakutan", "berdiam diri dan tercengang", "bergegas pergi ke Betlehem", "bersiap-siap menggiring domba-nya"], ans: 2 }
+        ];
+
+        const dataPGK = [
+            {
+                id: 1,
+                q: "Jika aku berbuat dosa, yang akan aku lakukan adalah ....",
+                options: [
+                    { text: "segera masuk gereja", correct: false },
+                    { text: "segera menyesalinya", correct: true },
+                    { text: "memikirkan yang sudah terjadi", correct: false },
+                    { text: "memohon pengampunan Tuhan", correct: true }
+                ]
+            },
+            {
+                id: 2,
+                q: "Hukuman Tuhan atas pelanggaran yang dilakukan manusia pertama adalah ....",
+                options: [
+                    { text: "hidupnya dipenuhi dengan kesukaran", correct: true },
+                    { text: "mereka harus bekerja keras", correct: true },
+                    { text: "hidup mereka akan dipenuhi kesedihan", correct: true },
+                    { text: "tidak ada tempat tinggal untuk mereka", correct: false }
+                ]
+            },
+            {
+                id: 3,
+                q: "Pelanggaran yang dilakukan oleh manusia pertama mengakibatkan ....",
+                options: [
+                    { text: "manusia tidak dapat makan", correct: false },
+                    { text: "manusia berdosa", correct: true },
+                    { text: "hidupnya penuh kesakitan", correct: true },
+                    { text: "dosa menurun pada anaknya", correct: true }
+                ]
+            },
+            {
+                id: 4,
+                q: "Persembahan orang Majus kepada bayi Yesus yaitu ....",
+                options: [
+                    { text: "perak", correct: false },
+                    { text: "kemenyan", correct: true },
+                    { text: "emas", correct: true },
+                    { text: "mur", correct: true }
+                ]
+            },
+            {
+                id: 5,
+                q: "Hadiah yang pantas kulakukan atas kelahiran Yesus ke dunia adalah ....",
+                options: [
+                    { text: "hidup dalam ketaatan pada kehendak-Nya", correct: true },
+                    { text: "selalu datang ke gereja paling awal", correct: false },
+                    { text: "memberi persembahan yang sangat banyak", correct: false },
+                    { text: "percaya penuh pada Juru Selamat dan selalu bersyukur", correct: true }
+                ]
+            }
+        ];
+
+        const dataMatchingLeft = [
+            { id: "M1", text: "1. Hidup manusia pertama", correctRight: "R1" },
+            { id: "M2", text: "2. Juru Selamat manusia", correctRight: "R2" },
+            { id: "M3", text: "3. Manusia yang diciptakan pertama", correctRight: "R3" },
+            { id: "M4", text: "4. Dosa yang menurun kepada anaknya", correctRight: "R4" },
+            { id: "M5", text: "5. Kota tempat Yesus lahir", correctRight: "R5" }
+        ];
+
+        const dataMatchingRight = [
+            { id: "R3", text: "a. Adam dan Hawa" },
+            { id: "R4", text: "b. Dosa warisan" },
+            { id: "R1", text: "c. Di taman Eden" },
+            { id: "R2", text: "d. Yesus Kristus" },
+            { id: "R5", text: "e. Betlehem" }
+        ];
+
+        const dataBS = [
+            { id: 1, q: "Yesus lahir di kota Betlehem untuk menyelamatkan manusia dari dosa.", ans: true },
+            { id: 2, q: "Ular membujuk Hawa untuk melanggar perintah Allah di Taman Eden.", ans: true },
+            { id: 3, q: "Allah membiarkan manusia binasa karena Allah tidak mengasihi manusia.", ans: false },
+            { id: 4, q: "Menyesali kesalahan dan memohon pengampunan Tuhan adalah tindakan yang benar saat berbuat dosa.", ans: true },
+            { id: 5, q: "Orang Majus membawa hadiah berupa perak, perunggu, dan permata kepada Yesus.", ans: false }
+        ];
+
+        let studentInfo = { name: "", class: "", no: "" };
+        let userAnswersPG = {}; 
+        let userAnswersPGK = {}; 
+        let userMatching = {}; 
+        let userAnswersBS = {}; 
+
+        let selectedLeftMatch = null;
+
+        window.addEventListener("DOMContentLoaded", () => {
+            checkExistingSubmission();
+        });
+
+        function checkExistingSubmission() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                document.getElementById("start-screen").classList.add("hidden");
+                document.getElementById("assessment-container").classList.add("hidden");
+                document.getElementById("locked-screen").classList.remove("hidden");
+                
+                document.getElementById("saved-score-display").innerText = `Skor: ${parsed.totalScore} / 100`;
+                document.getElementById("saved-time-display").innerText = `Dikirim pada: ${parsed.date}`;
+            }
+        }
+
+        function startAssessment(e) {
+            e.preventDefault();
+            const name = document.getElementById("student-name").value.trim();
+            const cls = document.getElementById("student-class").value;
+            const no = document.getElementById("student-no").value;
+
+            if (!name || !no) return;
+
+            studentInfo = { name, class: cls, no };
+
+            document.getElementById("bar-student-name").innerText = name;
+            document.getElementById("bar-class-no").innerText = `Kelas ${cls} / Absen ${no}`;
+
+            document.getElementById("start-screen").classList.add("hidden");
+            document.getElementById("assessment-container").classList.remove("hidden");
+
+            renderQuestions();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            // Render Pilihan Ganda
+            const pgContainer = document.getElementById("section-1-questions");
+            pgContainer.innerHTML = dataPG.map((item, idx) => `
+                <div class="bg-white p-4 md:p-5 rounded-2xl border-2 border-slate-200 shadow-sm">
+                    <p class="font-bold text-slate-900 text-sm md:text-base mb-3 leading-relaxed">
+                        <span class="bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-lg text-xs font-black mr-2">${idx + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        ${item.options.map((opt, oIdx) => `
+                            <button type="button" onclick="selectPG(${item.id}, ${oIdx})" id="pg-${item.id}-${oIdx}" class="option-btn text-left p-3 rounded-xl border-2 border-slate-200 hover:border-blue-400 hover:bg-blue-50 text-xs md:text-sm font-bold text-slate-700 flex items-center space-x-2.5">
+                                <span class="w-6 h-6 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-black shrink-0 bg-slate-100">${String.fromCharCode(65 + oIdx)}</span>
+                                <span>${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Pilihan Ganda Kompleks
+            const pgkContainer = document.getElementById("section-2-questions");
+            pgkContainer.innerHTML = dataPGK.map((item, idx) => `
+                <div class="bg-white p-4 md:p-5 rounded-2xl border-2 border-slate-200 shadow-sm">
+                    <p class="font-bold text-slate-900 text-sm md:text-base mb-3 leading-relaxed">
+                        <span class="bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded-lg text-xs font-black mr-2">${idx + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="space-y-2">
+                        ${item.options.map((opt, oIdx) => `
+                            <label onclick="togglePGK(${item.id}, ${oIdx})" class="flex items-center p-3 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-xs md:text-sm font-bold text-slate-700 transition">
+                                <input type="checkbox" id="pgk-${item.id}-${oIdx}" class="w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500 mr-3 pointer-events-none">
+                                <span>${opt.text}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Menjodohkan
+            renderMatching();
+
+            // Render Benar/Salah
+            const bsContainer = document.getElementById("section-4-questions");
+            bsContainer.innerHTML = dataBS.map((item, idx) => `
+                <div class="bg-white p-4 md:p-5 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <p class="font-bold text-slate-900 text-sm md:text-base leading-relaxed">
+                        <span class="bg-rose-100 text-rose-800 px-2.5 py-0.5 rounded-lg text-xs font-black mr-2">${idx + 1}</span>
+                        ${item.q}
+                    </p>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button type="button" onclick="selectBS(${item.id}, true)" id="bs-${item.id}-true" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl border-2 border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-black text-xs transition">
+                            <i class="fa-solid fa-check mr-1"></i> BENAR
+                        </button>
+                        <button type="button" onclick="selectBS(${item.id}, false)" id="bs-${item.id}-false" class="flex-1 md:flex-none px-5 py-2.5 rounded-xl border-2 border-rose-300 bg-rose-50 hover:bg-rose-100 text-rose-800 font-black text-xs transition">
+                            <i class="fa-solid fa-xmark mr-1"></i> SALAH
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectPG(qId, optionIdx) {
+            userAnswersPG[qId] = optionIdx;
+            dataPG.find(q => q.id === qId).options.forEach((_, oIdx) => {
+                const btn = document.getElementById(`pg-${qId}-${oIdx}`);
+                if (oIdx === optionIdx) {
+                    btn.classList.add("selected-option");
+                } else {
+                    btn.classList.remove("selected-option");
+                }
+            });
+        }
+
+        function togglePGK(qId, optionIdx) {
+            if (!userAnswersPGK[qId]) userAnswersPGK[qId] = [];
+            const idxPos = userAnswersPGK[qId].indexOf(optionIdx);
+            const checkbox = document.getElementById(`pgk-${qId}-${optionIdx}`);
+
+            if (idxPos > -1) {
+                userAnswersPGK[qId].splice(idxPos, 1);
+                checkbox.checked = false;
+            } else {
+                userAnswersPGK[qId].push(optionIdx);
+                checkbox.checked = true;
+            }
+        }
+
+        function renderMatching() {
+            const leftContainer = document.getElementById("match-left-list");
+            const rightContainer = document.getElementById("match-right-list");
+
+            leftContainer.innerHTML = dataMatchingLeft.map(item => {
+                const isMatched = userMatching[item.id] !== undefined;
+                const isSelected = selectedLeftMatch === item.id;
+                
+                let matchedText = "";
+                if (isMatched) {
+                    const matchedRightObj = dataMatchingRight.find(r => r.id === userMatching[item.id]);
+                    matchedText = matchedRightObj ? matchedRightObj.text : "";
+                }
+
+                return `
+                    <div onclick="clickLeftMatch('${item.id}')" class="match-item p-3.5 rounded-2xl border-2 font-extrabold text-xs md:text-sm ${
+                        isMatched ? 'match-matched' : isSelected ? 'match-selected' : 'bg-white border-slate-200 hover:border-emerald-400'
+                    }">
+                        <div>${item.text}</div>
+                        ${isMatched ? `<div class="text-[11px] font-bold text-emerald-700 mt-1"><i class="fa-solid fa-link mr-1"></i> Terhubung: <strong>${matchedText}</strong></div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            rightContainer.innerHTML = dataMatchingRight.map(item => {
+                const isUsed = Object.values(userMatching).includes(item.id);
+
+                return `
+                    <div onclick="clickRightMatch('${item.id}')" class="match-item p-3.5 rounded-2xl border-2 font-extrabold text-xs md:text-sm ${
+                        isUsed ? 'match-matched' : 'bg-white border-slate-200 hover:border-emerald-400'
+                    }">
+                        ${item.text}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function clickLeftMatch(leftId) {
+            selectedLeftMatch = leftId;
+            renderMatching();
+        }
+
+        function clickRightMatch(rightId) {
+            if (!selectedLeftMatch) {
+                alert("Klik dulu salah satu opsi di kolom KIRI!");
+                return;
+            }
+
+            for (let lKey in userMatching) {
+                if (userMatching[lKey] === rightId) {
+                    delete userMatching[lKey];
+                }
+            }
+
+            userMatching[selectedLeftMatch] = rightId;
+            selectedLeftMatch = null;
+            renderMatching();
+        }
+
+        function resetMatching() {
+            userMatching = {};
+            selectedLeftMatch = null;
+            renderMatching();
+        }
+
+        function selectBS(qId, val) {
+            userAnswersBS[qId] = val;
+            const btnTrue = document.getElementById(`bs-${qId}-true`);
+            const btnFalse = document.getElementById(`bs-${qId}-false`);
+
+            if (val === true) {
+                btnTrue.classList.add("bg-emerald-500", "text-white");
+                btnTrue.classList.remove("bg-emerald-50", "text-emerald-800");
+                btnFalse.classList.remove("bg-rose-500", "text-white");
+                btnFalse.classList.add("bg-rose-50", "text-rose-800");
+            } else {
+                btnFalse.classList.add("bg-rose-500", "text-white");
+                btnFalse.classList.remove("bg-rose-50", "text-rose-800");
+                btnTrue.classList.remove("bg-emerald-500", "text-white");
+                btnTrue.classList.add("bg-emerald-50", "text-emerald-800");
+            }
+        }
+
+        function confirmSubmission() {
+            const countPG = Object.keys(userAnswersPG).length;
+            const countBS = Object.keys(userAnswersBS).length;
+
+            if (countPG < 10 || countBS < 5) {
+                if (!confirm("Masih ada pertanyaan yang belum kamu jawab. Yakin mau mengumpulkan sekarang?")) {
+                    return;
+                }
+            } else {
+                if (!confirm("Apakah kamu sudah selesai memeriksa semua jawaban dan mau mengumpulkan?")) {
+                    return;
+                }
+            }
+
+            calculateAndSaveResult();
+        }
+
+        function calculateAndSaveResult() {
+            // Section 1: PG (40 pts)
+            let scoreS1 = 0;
+            dataPG.forEach(item => {
+                if (userAnswersPG[item.id] === item.ans) scoreS1 += 4;
+            });
+
+            // Section 2: PGK (25 pts)
+            let scoreS2 = 0;
+            dataPGK.forEach(item => {
+                const userOpts = (userAnswersPGK[item.id] || []).sort();
+                const correctOpts = item.options.map((opt, i) => opt.correct ? i : null).filter(i => i !== null).sort();
+                
+                if (JSON.stringify(userOpts) === JSON.stringify(correctOpts)) {
+                    scoreS2 += 5;
+                } else {
+                    let correctPicks = 0;
+                    userOpts.forEach(o => { if (item.options[o].correct) correctPicks++; });
+                    if (correctPicks > 0 && userOpts.length <= correctOpts.length) {
+                        scoreS2 += Math.round((correctPicks / correctOpts.length) * 5);
+                    }
+                }
+            });
+
+            // Section 3: Menjodohkan (20 pts)
+            let scoreS3 = 0;
+            dataMatchingLeft.forEach(item => {
+                const userChoice = userMatching[item.id];
+                if (userChoice && userChoice === item.correctRight) scoreS3 += 4;
+            });
+
+            // Section 4: B/S (15 pts)
+            let scoreS4 = 0;
+            dataBS.forEach(item => {
+                if (userAnswersBS[item.id] === item.ans) scoreS4 += 3;
+            });
+
+            const totalScore = scoreS1 + scoreS2 + scoreS3 + scoreS4;
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString("id-ID", { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+            const resultObject = {
+                student: studentInfo,
+                scoreS1,
+                scoreS2,
+                scoreS3,
+                scoreS4,
+                totalScore,
+                date: dateStr,
+                verifyId: "PAK5-" + Math.floor(100000 + Math.random() * 900000)
+            };
+
+            // Lock submission in localStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(resultObject));
+
+            // Launch Celebration Confetti Effect
+            try {
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            } catch(e) {}
+
+            displayResultModal(resultObject);
+        }
+
+        function displayResultModal(res) {
+            document.getElementById("res-name").innerText = res.student.name;
+            document.getElementById("res-class-no").innerText = `Kelas ${res.student.class} / Absen ${res.student.no}`;
+            document.getElementById("res-date").innerText = res.date;
+            document.getElementById("res-id").innerText = res.verifyId;
+
+            document.getElementById("res-total-score").innerText = res.totalScore;
+            document.getElementById("res-s1").innerText = `${res.scoreS1} / 40`;
+            document.getElementById("res-s2").innerText = `${res.scoreS2} / 25`;
+            document.getElementById("res-s3").innerText = `${res.scoreS3} / 20`;
+            document.getElementById("res-s4").innerText = `${res.scoreS4} / 15`;
+
+            let predicate = "Sangat Baik! Pertahankan Prestasimu!";
+            if (res.totalScore < 70) predicate = "Cukup Baik! Tetap Semangat Belajar!";
+            else if (res.totalScore < 85) predicate = "Baik Sekali! Hasil Yang Membanggakan!";
+            document.getElementById("res-grade-predicate").innerText = predicate;
+
+            document.getElementById("result-modal").classList.remove("hidden");
+        }
+
+        function showCertificateFromStorage() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                displayResultModal(JSON.parse(savedData));
+            }
+        }
+
+        function closeResultModal() {
+            document.getElementById("result-modal").classList.add("hidden");
+            checkExistingSubmission();
+        }
+    </script>
+</body>
+</html>
